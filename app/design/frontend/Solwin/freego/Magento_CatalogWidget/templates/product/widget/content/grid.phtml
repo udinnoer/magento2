@@ -47,8 +47,9 @@
                                 <div class="product-img-block">
                                     <a href="<?php /* @escapeNotVerified */ echo $block->getProductUrl($_item) ?>" class="product-item-photo">
                                         <?php echo $block->getImage($_item, $image)->toHtml(); ?>
+                                        <div class="pro-overlay"></div>
                                     </a>
-                                    <div class="pro-overlay"></div>
+
                                     <?php if ($showWishlist || $showCompare || $showCart): ?>
                                         <div class="product-item-actions">
                                             <?php if ($showCart): ?>

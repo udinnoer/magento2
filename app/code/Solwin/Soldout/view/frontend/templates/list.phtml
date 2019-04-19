@@ -152,6 +152,60 @@ $outofstockImagewidth = $outofstock_helper->getConfigValue('outofstock_product/o
                         <?php if ($viewMode == 'grid') { ?>
                         </div>
                     <?php } ?>
+                    <?php
+                    $helper = $this->helper('Solwin\Cpanel\Helper\Data');
+                    $isNewLabel = $helper->getShowproductnewlabel();
+                    $isSaleLabel = $helper->getShowproductsalelabel();
+
+                    /**
+                     * Check if "new" label is enabled and if product has from new date & to new date
+                     */
+                    if ($isNewLabel) {
+                        $fromDate = $_product->getNewsFromDate();
+                        $toDate = $_product->getNewsToDate();
+
+                        if (isset($fromDate) && isset($toDate)) {
+                            $fromDate = strtotime($fromDate);
+                            $toDate = strtotime($toDate);
+                            $now = strtotime(date("Y-m-d h:m:s"));
+
+                            if ($fromDate <= $now && $now <= $toDate) {
+                                ?>
+                                <span class="new-lbl">New</span>
+                                <?php
+                            }
+                        }
+                    }
+                    ?>
+
+                    <?php
+                    /**
+                     * Check if "sale" label is enabled and if product has special price with from & to special price
+                     */
+                    if ($isSaleLabel) {
+                        $special_price = number_format($_product->getSpecialPrice(), 2);
+                        $regular_price = number_format($_product->getPrice(), 2);
+                        if (isset($special_price) && $special_price > 0) {
+                            if ($special_price < $regular_price) {
+                                $fromSpecialDate = $_product->getSpecialFromDate();
+                                $toSpecialDate = $_product->getSpecialToDate();
+
+                                if (isset($fromSpecialDate) && isset($toSpecialDate)) {
+                                    $fromSpecialDate = strtotime($fromSpecialDate);
+                                    $toSpecialDate = strtotime($toSpecialDate);
+                                    $now = strtotime(date("Y-m-d h:m:s"));
+
+                                    if ($fromSpecialDate <= $now && $now <= $toSpecialDate) {
+                                        ?>
+                                        <span class="sale-lbl">Sale</span>
+                                        <?php
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    ?>
+
 
                     <div class="product details product-item-details">
                         <?php
@@ -240,4 +294,4 @@ $outofstockImagewidth = $outofstock_helper->getConfigValue('outofstock_product/o
             }
         </script>
     <?php endif; ?>
-<?php endif; 
+<?php endif; ?>

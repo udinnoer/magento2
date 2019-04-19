@@ -1,7 +1,10 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Store/etc/config.xsd">
     <default>
-        <cpanelsection>            
+        <cpanelsection>
+            <layoutgroup>
+                <layoutname>black</layoutname>
+            </layoutgroup>
             <headergroup>
                 <top_header_notification>Get free shipping on order over $99!</top_header_notification>
                 <sharingaddon>0</sharingaddon>

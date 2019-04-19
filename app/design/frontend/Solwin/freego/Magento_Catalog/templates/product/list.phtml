@@ -19,16 +19,15 @@ use Magento\Framework\App\Action\Action;
 $_productCollection = $block->getLoadedProductCollection();
 $_helper = $this->helper('Magento\Catalog\Helper\Output');
 
-$outofstock_helper = $this->helper('Solwin\Soldout\Helper\Data');
-$outofstockEnable = $outofstock_helper->getConfigValue('outofstock_product/outofstockproduct/enableoutofstock');
-$outofstockLabelImage = $outofstock_helper->getConfigValue('outofstock_product/outofstockproduct/showstock_label_image');
-$outofstockTitle = $outofstock_helper->getConfigValue('outofstock_product/outofstockproduct/titleoutofstock');
-$outofstockImage = $outofstock_helper->getConfigValue('outofstock_product/outofstockproduct/imageoutofstock');
-$imageUrl = $outofstock_helper->getMediaUrl() . 'outofstockimage/' . $outofstockImage;
-$outofstockPositionLabel = $outofstock_helper->getConfigValue('outofstock_product/outofstockproduct/showstock_position_label');
-$outofstockPositionImage = $outofstock_helper->getConfigValue('outofstock_product/outofstockproduct/showstock_position_image');
-$outofstockImageHeight = $outofstock_helper->getConfigValue('outofstock_product/outofstockproduct/imageheightoutofstock');
-$outofstockImagewidth = $outofstock_helper->getConfigValue('outofstock_product/outofstockproduct/imagewidthoutofstock');
+$outofstockEnable = $this->getConfig('outofstock_product/outofstockproduct/enableoutofstock');
+$outofstockLabelImage = $this->getConfig('outofstock_product/outofstockproduct/showstock_label_image');
+$outofstockTitle = $this->getConfig('outofstock_product/outofstockproduct/titleoutofstock');
+$outofstockImage = $this->getConfig('outofstock_product/outofstockproduct/imageoutofstock');
+$imageUrl = $this->getMediaUrl() . 'outofstockimage/' . $outofstockImage;
+$outofstockPositionLabel = $this->getConfig('outofstock_product/outofstockproduct/showstock_position_label');
+$outofstockPositionImage = $this->getConfig('outofstock_product/outofstockproduct/showstock_position_image');
+$outofstockImageHeight = $this->getConfig('outofstock_product/outofstockproduct/imageheightoutofstock');
+$outofstockImagewidth = $this->getConfig('outofstock_product/outofstockproduct/imagewidthoutofstock');
 ?>
 <?php if (!$_productCollection->count()): ?>
     <div class="message info empty"><div><?php /* @escapeNotVerified */ echo __('We can\'t find products matching the selection.') ?></div></div>
