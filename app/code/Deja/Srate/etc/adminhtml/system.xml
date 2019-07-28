@@ -64,7 +64,7 @@
                 </field>				
                 <field id="import" translate="label" type="Deja\Srate\Block\Adminhtml\Form\Field\Import" sortOrder="11" showInDefault="0" showInWebsite="1" showInStore="0">
                     <label>Import Rates</label>
-                    <backend_model>Deja\Srate\Model\Config\Backend\Deja</backend_model>
+                    <backend_model>Deja\Srate\Model\Config\Backend\Srate</backend_model>
                 </field>
 				<!-- <field id="handling_type" translate="label" type="select" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Handling Fee Calculation</label>
