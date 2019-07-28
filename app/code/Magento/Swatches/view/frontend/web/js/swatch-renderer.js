@@ -1,5 +1,5 @@
 /**
- * Copyright © Magento, Inc. All rights reserved.
+ * Copyright Â© Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 
@@ -296,7 +296,7 @@ define([
                 // to use it in events handlers instead of _LoadProductMedia()
                 this._debouncedLoadProductMedia = _.debounce(this._LoadProductMedia.bind(this), 500);
             }
-
+            //console.log(this.options.jsonSwatchConfig);
             if (this.options.jsonConfig !== '' && this.options.jsonSwatchConfig !== '') {
                 // store unsorted attributes
                 this.options.jsonConfig.mappedAttributes = _.clone(this.options.jsonConfig.attributes);
@@ -391,7 +391,7 @@ define([
                     input = $widget._RenderFormInput(item),
                     listLabel = '',
                     label = '';
-
+                //console.log(item);
                 // Show only swatch controls
                 if ($widget.options.onlySwatches && !$widget.options.jsonSwatchConfig.hasOwnProperty(item.id)) {
                     return;
@@ -480,12 +480,12 @@ define([
                 moreClass = this.options.classes.moreButton,
                 moreText = this.options.moreButtonText,
                 countAttributes = 0,
-                html = '';
+                html = '<table>';
 
             if (!this.options.jsonSwatchConfig.hasOwnProperty(config.id)) {
                 return '';
             }
-
+            html += '<tr>';
             $.each(config.options, function () {
                 var id,
                     type,
@@ -537,9 +537,9 @@ define([
                         '</div>';
                 } else if (type === 2) {
                     // Image
-                    html += '<div class="' + optionClass + ' image" ' + attr +
-                        ' style="background: url(' + value + ') no-repeat center; background-size: initial;">' + '' +
-                        '</div>';
+                    html += '<td><div class="' + optionClass + ' image" ' + attr +
+                        ' style="background: url(' + thumb + ') no-repeat center; background-size: initial;">' + '' +
+                        '</div></td>';
                 } else if (type === 3) {
                     // Clear
                     html += '<div class="' + optionClass + '" ' + attr + '></div>';
@@ -548,7 +548,23 @@ define([
                     html += '<div class="' + optionClass + '" ' + attr + '>' + label + '</div>';
                 }
             });
-
+            
+            html += '</tr><tr>';
+            //console.log(this.getProduct());
+            $.each(config.options, function (index) {
+                var id = this.id;
+                var label = optionConfig[id].hasOwnProperty('label') ? optionConfig[id].label : '';
+                html += '<td>Desc:<div id="desc_'+id+'"></div>';
+                    //console.log(config.options[index].products);
+                var productid=config.options[index].products[0];
+                $.get("tools?id="+productid, function(data, status){
+                    //console.log(data);
+                    //alert("Data: " + data + "\nStatus: " + status);
+                    $("#desc_" + id).html(data);
+                });
+                html += '</td>';
+            });
+            html +='</tr></table>';
             return html;
         },
 
