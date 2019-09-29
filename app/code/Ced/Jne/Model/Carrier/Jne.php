@@ -206,9 +206,9 @@ class Jne extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
         			$method = $this->_rateMethodFactory->create();
         
         			$method->setCarrier($this->_code);
-        			$method->setCarrierTitle($this->getConfigData('title'));
+        			$method->setCarrierTitle($rate['method']);
         			$method->setMethod('jne'.$count++);
-        			$method->setMethodTitle($this->getConfigData('name'));
+        			$method->setMethodTitle($rate['label']);
         			$method->setCost($rate['price']);
         			$method->setPrice($rate['price']);
                     $method->setMethodDescription($rate['etd']);

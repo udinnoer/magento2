@@ -199,7 +199,7 @@ class Jne extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         $select->where($orWhere);
        
         $result = $connection->fetchAll($select, $bind);
-        //$logger->info(print_r($result, true));
+        $logger->info(print_r($result, true));
         
         $methods = array();
         $rates = array();
@@ -254,8 +254,56 @@ class Jne extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 
                         }
                     }else{
-                          $totalPrice = $rate*$shippingWeight;
+                          //$totalPrice = $rate*$shippingWeight;
+                          // edit oleh udin untuk implementasi Raja ongkir API
+                          if ($shippingWeight==0){
+			      $shippingWeight=1;
+                          }
+                          $RajaongkirWeight = 1000*$shippingWeight;
+                          $dataRajaongkir = array("origin"=>"115",     // kode origin kota depok
+                                            	"originType"=>"city",
+                    			  	"destination"=>$rate,
+                    				"destinationType"=>"subdistrict",
+                    				"weight" => $RajaongkirWeight,
+                    				"courier"=>$value['shipping_method']
+                				);                                                                    
+$writer = new \Zend\Log\Writer\Stream(BP . '/var/log/jnero.log');
+                            $logger = new \Zend\Log\Logger();
+                            $logger->addWriter($writer);
+                            $logger->info("request :".json_encode($dataRajaongkir));
+        		 $data_string = json_encode($dataRajaongkir);                                                                                   
+                                                                                                                            
+        		 $ch = curl_init('https://pro.rajaongkir.com/api/cost');                                                                      
+        		 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
+        		 curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);                                                                  
+        		 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                                                                      
+        		 curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+            			'Content-Type: application/json',      
+            			'key:eba22211c2695162630cd417cd900bcc',                                                                          
+            			'Content-Length: ' . strlen($data_string))                                                                       
+        		);                                                                                                                   
+                                                                                                                            
+        		$result = curl_exec($ch);
+$logger->info("result :".$result);
+        		$resultArr = json_decode($result);
+        		$costsArr=array($value['shipping_label']=>0);
+        		if (isset($resultArr->rajaongkir)){
+            		    //var_dump($resultArr->rajaongkir->results[0]->costs);
+$logger->info("result cost :".json_encode($resultArr->rajaongkir->results[0]->costs));
+            		    foreach ($resultArr->rajaongkir->results[0]->costs as $cost) {
+                	        //echo "ONGKIR:".$cost->service." ".$cost->cost[0]->value.PHP_EOL;
+                	        $costsArr[$cost->service]=$cost->cost[0]->value;
+            	       	    }
+        		}
+$logger->info("-----------CostArr------ :".$value['shipping_label'].":".json_encode($costsArr));
+                        if ($value['shipping_label']=="JNE"){
+				$totalPrice = $costsArr["REG"];
+                        }else{
+				$totalPrice = $costsArr[$value['shipping_label']];
+			}
+			// end edit Raja ongkir
                     }
+ 		    if($totalPrice>0){
 
                     $rates[] = array(
                                  'method' => $value['shipping_method'],
@@ -263,6 +311,8 @@ class Jne extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
                                  'price' => $totalPrice,
                                  'etd'   => $value['etd']
                              );
+			}
+$logger->info("-----Result RATES------ :".json_encode($rates));
                 }
             }
         }else{
