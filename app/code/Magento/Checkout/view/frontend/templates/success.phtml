@@ -12,18 +12,29 @@
     <?php if ($block->getOrderId()):?>
         <?php if ($block->getCanViewOrder()) :?>
             <p><?= __('Your order number is: %1.', sprintf('<a href="%s" class="order-number"><strong>%s</strong></a>', $block->escapeHtml($block->getViewOrderUrl()), $block->escapeHtml($block->getOrderId()))) ?></p>
-            <p>Pembayaran yg digunakan : <?php echo $block->getPaymentMethod()?></p>
+            
             <?php
+            if ($block->getPaymentMethod()=="banktransfer"){
+            echo "<p>Pembayaran yg digunakan : Bank Transfer</p>";
             echo $this->getLayout()
                     ->createBlock('Magento\Cms\Block\Block')
                     ->setBlockId('petunjuk_transfer')
                     ->toHtml();
+            }
+            if ($block->getPaymentMethod()=="cashondelivery"){
+
+            echo "<p>Pembayaran yg digunakan : Bayar Tunai(Cash)</p>";
+                echo $this->getLayout()
+                        ->createBlock('Magento\Cms\Block\Block')
+                        ->setBlockId('petunjuk_cash')
+                        ->toHtml();
+                }
             ?>
         <?php  else :?>
             <p><?= __('Your order # is: <span>%1</span>.', $block->escapeHtml($block->getOrderId())) ?></p>
             
         <?php endif;?>
-            <p><?= /* @escapeNotVerified */ __('We\'ll email you an order confirmation with details and tracking info.') ?></p>
+            <!--<p><?= /* @escapeNotVerified */ __('We\'ll email you an order confirmation with details and tracking info.') ?></p> -->
     <?php endif;?>
 
     <?= $block->getAdditionalInfoHtml() ?>
