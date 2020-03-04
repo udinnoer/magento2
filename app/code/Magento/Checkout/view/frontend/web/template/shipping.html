@@ -18,7 +18,7 @@
         <if args="!isFormInline">
             <button type="button"
                     class="action action-show-popup"
-                    click="showFormPopUp"
+                    onclick="window.location.href = '/customer/address/new/';"
                     visible="!isNewAddressAdded()">
                 <span translate="'New Address'" />
             </button>
@@ -30,7 +30,15 @@
         <each args="getRegion('before-form')" render="" />
 
         <!-- Inline address form -->
-        <render if="isFormInline" args="shippingFormTemplate" />
+        <!--render if="isFormInline" args="shippingFormTemplate" />-->
+        <if args="isFormInline">
+        <button type="button"
+                    class="action action-show-popup"
+                    onclick="window.location.href = '/customer/address/new/';"
+                    visible="!isNewAddressAdded()">
+                <span translate="'New Address'" />
+            </button>
+        </if>
     </div>
 </li>
 

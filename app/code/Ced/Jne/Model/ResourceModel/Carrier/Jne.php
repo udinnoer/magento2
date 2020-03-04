@@ -297,7 +297,13 @@ $logger->info("result cost :".json_encode($resultArr->rajaongkir->results[0]->co
         		}
 $logger->info("-----------CostArr------ :".$value['shipping_label'].":".json_encode($costsArr));
                         if ($value['shipping_label']=="JNE"){
-				$totalPrice = $costsArr["REG"];
+                                if (isset($costsArr["REG"])){  
+				    $totalPrice = $costsArr["REG"];
+                                }elseif(isset($costsArr["CTC"])){
+                                    $totalPrice = $costsArr["CTC"];
+                                }else{
+                                    $totalPrice =0;
+                                }
                         }else{
 				$totalPrice = $costsArr[$value['shipping_label']];
 			}

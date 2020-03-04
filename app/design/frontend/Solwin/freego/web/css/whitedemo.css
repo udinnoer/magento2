@@ -78,6 +78,32 @@
         border-bottom: 1px solid #eee;
     }
 }
+@media screen and (max-width: 767px){
+   .block-search .label:before {
+      margin: 6px 7.5px 0 0;
+      color: #000000;
+   }
+   .page-header {
+      margin-bottom: 0;
+      background: #ffffff;
+   }
+   .action.nav-toggle:before {
+      color: #000000;
+   }
+}
+@media screen and (max-width: 767px){
+   .block-search .label:before {
+      margin: 6px 7.5px 0 0;
+      color: #000000;
+   }
+   .page-header {
+      margin-bottom: 0;
+      background: #ffffff;
+   }
+   .action.nav-toggle:before {
+      color: #000000;
+   }
+}
 .customer-welcome.active .action.switch::after{content: '\f0d7';}
 #wishlist-sidebar .product-item {
     min-height: inherit;
