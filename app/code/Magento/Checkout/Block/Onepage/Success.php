@@ -80,6 +80,8 @@ class Success extends \Magento\Framework\View\Element\Template
     protected function prepareBlockData()
     {
         $order = $this->_checkoutSession->getLastRealOrder();
+        $payment = $order->getPayment();
+        $paymentMethod = $payment->getMethod();
 
         $this->addData(
             [
@@ -94,7 +96,8 @@ class Success extends \Magento\Framework\View\Element\Template
                 ),
                 'can_print_order' => $this->isVisible($order),
                 'can_view_order'  => $this->canViewOrder($order),
-                'order_id'  => $order->getIncrementId()
+                'order_id'  => $order->getIncrementId(),
+                'payment_method'  => $paymentMethod
             ]
         );
     }
