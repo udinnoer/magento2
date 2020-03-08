@@ -11,23 +11,22 @@
 <div class="checkout-success">
     <?php if ($block->getOrderId()):?>
         <?php if ($block->getCanViewOrder()) :?>
-            <p><?= __('Nomor Order: %1.', sprintf('<a href="%s" class="order-number"><strong>%s</strong></a>', $block->escapeHtml($block->getViewOrderUrl()), $block->escapeHtml($block->getOrderId()))) ?></p>
-            <p><?= __('Product: %1.', sprintf('%s', $block->escapeHtml($block->getOrderItem()))) ?></p>
+            <p><?= __('Nomor Order: <b>%1.</b>', sprintf('<a href="%s" class="order-number"><strong>%s</strong></a>', $block->escapeHtml($block->getViewOrderUrl()), $block->escapeHtml($block->getOrderId()))) ?></p>
+            <p><?= __('Product: <b>%1.</b>', sprintf('%s', $block->escapeHtml($block->getOrderItem()))) ?></p>
             <p>Jumlah Yang harus dipayar: <?php echo number_format($block->getTotalAmount(),0);?></p>
             <p>Segera Lakukan pembayaran anda sebelum stock Habis</p>
-            <br/>
             <br/>
             Order Sobat sudah kami terima <br/>
             Segera lakukan pembayaran dalam waktu:
             <h2><p id="demo"></p></h2>
             <?php $date_bayar_label=date('d M Y h:i', time() + 111600); ?>
             <?php $date_bayar_js=date('M d, Y h:i:s', time() + 111600); ?>
-            (<p><b>Sebelum <?php echo $date_bayar_label;?> WIB</b></p>)
+            <p><h3>(<b>Sebelum <?php echo $date_bayar_label;?> WIB</b>)</h3></p>
             
             <?php
 
             if ($block->getPaymentMethod()=="banktransfer"){
-            echo "<p>Pembayaran yg digunakan : Bank Transfer</p>";
+            echo "<p>Metode pembayaran yg digunakan : Bank Transfer</p>";
             echo $this->getLayout()
                     ->createBlock('Magento\Cms\Block\Block')
                     ->setBlockId('petunjuk_transfer')
@@ -35,7 +34,7 @@
             }
             if ($block->getPaymentMethod()=="cashondelivery"){
 
-            echo "<p>Pembayaran yg digunakan : Bayar Tunai(Cash)</p>";
+            echo "<p>Metode pembayaran yg digunakan : Bayar Tunai(Cash)</p>";
                 echo $this->getLayout()
                         ->createBlock('Magento\Cms\Block\Block')
                         ->setBlockId('petunjuk_cash')
