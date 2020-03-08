@@ -11,9 +11,21 @@
 <div class="checkout-success">
     <?php if ($block->getOrderId()):?>
         <?php if ($block->getCanViewOrder()) :?>
-            <p><?= __('Your order number is: %1.', sprintf('<a href="%s" class="order-number"><strong>%s</strong></a>', $block->escapeHtml($block->getViewOrderUrl()), $block->escapeHtml($block->getOrderId()))) ?></p>
+            <p><?= __('Nomor Order: %1.', sprintf('<a href="%s" class="order-number"><strong>%s</strong></a>', $block->escapeHtml($block->getViewOrderUrl()), $block->escapeHtml($block->getOrderId()))) ?></p>
+            <p><?= __('Product: %1.', sprintf('%s', $block->escapeHtml($block->getOrderItem()))) ?></p>
+            <p>Jumlah Yang harus dipayar: <?php echo number_format($block->getTotalAmount(),0);?></p>
+            <p>Segera Lakukan pembayaran anda sebelum stock Habis</p>
+            <br/>
+            <br/>
+            Order Sobat sudah kami terima <br/>
+            Segera lakukan pembayaran dalam waktu:
+            <h2><p id="demo"></p></h2>
+            <?php $date_bayar_label=date('d M Y h:i', time() + 111600); ?>
+            <?php $date_bayar_js=date('M d, Y h:i:s', time() + 111600); ?>
+            (<p><b>Sebelum <?php echo $date_bayar_label;?> WIB</b></p>)
             
             <?php
+
             if ($block->getPaymentMethod()=="banktransfer"){
             echo "<p>Pembayaran yg digunakan : Bank Transfer</p>";
             echo $this->getLayout()
@@ -30,10 +42,7 @@
                         ->toHtml();
                 }
             ?>
-            <?php $date_bayar_label=date('d M Y h:i:s', time() + 111600); ?>
-            <?php $date_bayar_js=date('M d, Y h:i:s', time() + 111600); ?>
-            <p>Mohon selesaikan pembayaran sebelum: <b><?php echo $date_bayar_label;?></b></p>
-            <h2>Order akan cancel otomatis dalam : <p id="demo"></p></h2>
+            
 
 <script>
 // Set the date we're counting down to
@@ -55,8 +64,10 @@ var x = setInterval(function() {
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     
   // Output the result in an element with id="demo"
-  document.getElementById("demo").innerHTML = days + "d " + hours + "h "
-  + minutes + "m " + seconds + "s ";
+  //document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+  //+ minutes + "m " + seconds + "s ";
+  document.getElementById("demo").innerHTML =  hours + "Jam "
+  + minutes + "Menit " + seconds + "Detik ";
     
   // If the count down is over, write some text 
   if (distance < 0) {

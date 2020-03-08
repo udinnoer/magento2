@@ -82,7 +82,11 @@ class Success extends \Magento\Framework\View\Element\Template
         $order = $this->_checkoutSession->getLastRealOrder();
         $payment = $order->getPayment();
         $paymentMethod = $payment->getMethod();
-
+        $itemName = "";
+        foreach ($order->getAllVisibleItems() as $_item) {
+            $itemName = $_item->getName().",";
+        }
+        $totalAmount = $order->getGrandTotal();
         $this->addData(
             [
                 'is_order_visible' => $this->isVisible($order),
@@ -97,7 +101,9 @@ class Success extends \Magento\Framework\View\Element\Template
                 'can_print_order' => $this->isVisible($order),
                 'can_view_order'  => $this->canViewOrder($order),
                 'order_id'  => $order->getIncrementId(),
-                'payment_method'  => $paymentMethod
+                'payment_method'  => $paymentMethod,
+                'order_item'  => $itemName,
+                'total_amount'  => $totalAmount
             ]
         );
     }
