@@ -13,7 +13,7 @@
         <?php if ($block->getCanViewOrder()) :?>
             <p><?= __('Nomor Order: <b>%1.</b>', sprintf('<a href="%s" class="order-number"><strong>%s</strong></a>', $block->escapeHtml($block->getViewOrderUrl()), $block->escapeHtml($block->getOrderId()))) ?></p>
             <p><?= __('Product: <b>%1.</b>', sprintf('%s', $block->escapeHtml($block->getOrderItem()))) ?></p>
-            <p>Jumlah Yang harus dipayar: <?php echo number_format($block->getTotalAmount(),0);?></p>
+            <p>Jumlah Yang harus dibayar: <?php echo number_format($block->getTotalAmount(),0);?></p>
             <p>Segera Lakukan pembayaran anda sebelum stock Habis</p>
             <br/>
             Order Sobat sudah kami terima <br/>
@@ -26,7 +26,7 @@
             <?php
 
             if ($block->getPaymentMethod()=="banktransfer"){
-            echo "<p>Metode pembayaran yg digunakan : Bank Transfer</p>";
+            echo "<p>Metode pembayaran yang digunakan : Bank Transfer</p>";
             echo $this->getLayout()
                     ->createBlock('Magento\Cms\Block\Block')
                     ->setBlockId('petunjuk_transfer')
@@ -34,7 +34,7 @@
             }
             if ($block->getPaymentMethod()=="cashondelivery"){
 
-            echo "<p>Metode pembayaran yg digunakan : Bayar Tunai(Cash)</p>";
+            echo "<p>Metode pembayaran yang digunakan : Bayar Tunai(Cash)</p>";
                 echo $this->getLayout()
                         ->createBlock('Magento\Cms\Block\Block')
                         ->setBlockId('petunjuk_cash')
