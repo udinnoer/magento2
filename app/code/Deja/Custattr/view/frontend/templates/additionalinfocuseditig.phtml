@@ -1,0 +1,6 @@
+<div class="field custom_attribute">
+	<label class="label" for="customer_attribute”><span><?php /* @escapeNotVerified */ echo __('Instagram Account') ?></span></label>
+	<div class="control">
+		<input type="text" id="igaddress" name="igaddress" value="<?php echo $block->escapeHtml($block->getCustomer()->getCustomAttribute('igaddress')->getValue()) ?>" title="<?php /* @escapeNotVerified */ echo __('Instagram Account') ?>" class="input-text" autocomplete="off" />
+	</div>
+</div>
