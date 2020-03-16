@@ -1,8 +1,19 @@
+<?php
+$igvalue="";
+try{
+   if ($block->getCustomer()->getCustomAttribute('igaddress')){
+        $igvalue=$block->getCustomer()->getCustomAttribute('igaddress')->getValue();
+   }     
+        /* Some logic that could throw an Exception */
+    } catch (\Exception $e) {
+        $igvalue="";
+    }
+?>
 <fieldset class="fieldset info">
 <div class="field custom_attribute">
         <label class="label" for="igaddress"><span><?php /* @escapeNotVerified */ echo __('Instagram Account') ?></span></label>
         <div class="control">
-                <input type="text" id="igaddress" name="igaddress" value="<?php echo $block->escapeHtml($block->getCustomer()->getCustomAttribute('igaddress')->getValue()) ?>" title="<?php /* @escapeNotVerified */ echo __('Instagram Account') ?>" class="input-text" autocomplete="off" />
+                <input type="text" id="igaddress" name="igaddress" value="<?php echo $block->escapeHtml($igvalue) ?>" title="<?php /* @escapeNotVerified */ echo __('Instagram Account') ?>" class="input-text" autocomplete="off" />
         </div>
 </div>
 </fieldset>
